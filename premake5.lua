@@ -30,7 +30,7 @@ workspace "RayTracingProject"
 
     targetdir("Build/Bin")  
     objdir("Build/Obj/%{prj.name}/%{cfg.buildcfg}")
-	debugdir ("Build/Bin");
+	debugdir ("Build/..");
 	
 -- project RayTracing
 project "RayTracing"

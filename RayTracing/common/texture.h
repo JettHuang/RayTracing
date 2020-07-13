@@ -59,6 +59,7 @@ public:
 	virtual FColor3 value(double u, double v, const FPoint3& p) const override
 	{
 		return FColor3(1, 1, 1) * 0.5 * (1 + sin(scale * p.z() + 10 * noise.turb(p)));
+		//return noise.octaveNoise(p, 5, 2.0) * FColor3(1, 1, 1);
 	}
 
 public:
