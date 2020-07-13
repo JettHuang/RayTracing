@@ -5,7 +5,7 @@
 #pragma once
 
 #include "aarect.h"
-#include "hittable_aggregate.h"
+#include "hittable_list.h"
 
 
 // box
@@ -25,5 +25,5 @@ public:
 protected:
 	FPoint3 box_min;
 	FPoint3 box_max;
-	FHittableAggregate sides;
+	FHittableList sides;
 };

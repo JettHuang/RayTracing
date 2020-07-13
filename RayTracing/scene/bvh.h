@@ -6,7 +6,7 @@
 
 #include "basic.h"
 #include "hittable.h"
-#include "hittable_aggregate.h"
+#include "hittable_list.h"
 
 
 #define MAX_HITTABLES_IN_LEAF	5
@@ -18,7 +18,7 @@ class FBVH_Node : public FHittable
 public:
 	FBVH_Node();
 
-	FBVH_Node(FHittableAggregate &list, double time0, double time1)
+	FBVH_Node(FHittableList &list, double time0, double time1)
 		: FBVH_Node(list.objects, 0, list.objects.size(), time0, time1)
 	{}
 

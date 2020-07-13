@@ -33,3 +33,6 @@
 
 # intermediate directory
 build/
+
+*.ppm
+

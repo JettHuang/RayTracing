@@ -1,4 +1,4 @@
-// hittables aggregate
+// hittables list
 //
 //
 
@@ -10,12 +10,12 @@
 #include "hittable.h"
 
 
-// hittables aggregate
-class FHittableAggregate : public FHittable
+// hittables list
+class FHittableList : public FHittable
 {
 public:
-	FHittableAggregate() {}
-	FHittableAggregate(const shared_ptr<FHittable>& obj)
+	FHittableList() {}
+	FHittableList(const shared_ptr<FHittable>& obj)
 	{
 		add(obj);
 	}

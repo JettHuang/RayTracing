@@ -1,10 +1,10 @@
-// hittables aggregate
+// hittables list
 //
 //
 
-#include "hittable_aggregate.h"
+#include "hittable_list.h"
 
-bool FHittableAggregate::hit(const FRay& ray, double t_min, double t_max, FHitRecord& outHit) const
+bool FHittableList::hit(const FRay& ray, double t_min, double t_max, FHitRecord& outHit) const
 {
 	FHitRecord temp_hit;
 	auto hit_any = false;
@@ -25,7 +25,7 @@ bool FHittableAggregate::hit(const FRay& ray, double t_min, double t_max, FHitRe
 	return hit_any;
 }
 
-bool FHittableAggregate::bounding_box(double t0, double t1, FAABB& outbox) const
+bool FHittableList::bounding_box(double t0, double t1, FAABB& outbox) const
 {
 	if (objects.empty()) return false;
 

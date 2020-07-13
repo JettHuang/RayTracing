@@ -46,6 +46,6 @@ project "RayTracing"
         "./RayTracing/common/*.cc",
 		"./RayTracing/scene/*.h",
 		"./RayTracing/scene/*.cc",
-		"./RayTracing/raytracing.h",
-		"./RayTracing/raytracing.cc"
+		"./RayTracing/*.h",
+		"./RayTracing/*.cc"
     }

@@ -3,7 +3,7 @@
 //
 
 #include "bvh.h"
-#include "hittable_aggregate.h"
+#include "hittable_list.h"
 #include <algorithm>
 
 
@@ -42,7 +42,7 @@ FBVH_Node::FBVH_Node(std::vector<shared_ptr<FHittable>>& objects, size_t start, 
 
 	if (object_span <= MAX_HITTABLES_IN_LEAF)
 	{
-		shared_ptr<FHittableAggregate> hitablelist = make_shared<FHittableAggregate>();
+		shared_ptr<FHittableList> hitablelist = make_shared<FHittableList>();
 		for (size_t i = start; i < end; i++)
 		{
 			hitablelist->add(objects[i]);
