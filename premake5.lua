@@ -35,15 +35,19 @@ workspace "RayTracingProject"
 -- project RayTracing
 project "RayTracing"
     language "C++"
-    kind "StaticLib"
-    defines { "RAYTRACING_STATICLIB" }
+    kind "ConsoleApp"
 
     includedirs {
-        "RayTracing/Include"
+        "./RayTracing/common",
+		"./RayTracing/scene"
     }
     files {
-        "./RayTracing/Include/*.h",
-        "./RayTracing/Source/*.cc"
+        "./RayTracing/common/*.h",
+        "./RayTracing/common/*.cc",
+		"./RayTracing/scene/*.h",
+		"./RayTracing/scene/*.cc",
+		"./RayTracing/raytracing.h",
+		"./RayTracing/raytracing.cc"
     }
 
 -- project RealtimeViewer
@@ -51,10 +55,6 @@ project "RTViewer"
     language "C++"
     kind "ConsoleApp"
 
-	--defines { "RAYTRACING_STATICLIB" }
-	--dependson { "RayTracing" }
-	--links { "RayTracing" }
-	
 -- third library cflags and libs
 	includedirs { "./ThirdParty/SDL/include" }
 	libdirs { 

@@ -37,6 +37,9 @@ namespace XEditor
 		// ui windows...
 		void RenderUI(float InDelta);
 
+		// draw tool window
+		void RenderToolWindow();
+
 		void ToolTip(const char* InText);
 	protected:
 		ImVec4 clear_color;
