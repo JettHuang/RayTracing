@@ -6,6 +6,7 @@
 #include "basic.h"
 #include "vec3.h"
 #include "perlin.h"
+#include "standard_perlin.h"
 
 
 // class texture
@@ -59,11 +60,11 @@ public:
 	virtual FColor3 value(double u, double v, const FPoint3& p) const override
 	{
 		return FColor3(1, 1, 1) * 0.5 * (1 + sin(scale * p.z() + 10 * noise.turb(p)));
-		//return noise.octaveNoise(p, 5, 2.0) * FColor3(1, 1, 1);
 	}
 
 public:
 	FPerlin	noise;
+	FPerlin1D noise1d;
 	double	scale;
 };
 

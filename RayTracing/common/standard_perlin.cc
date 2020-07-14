@@ -4,6 +4,48 @@
 
 #include "standard_perlin.h"
 
+//////////////////////////////////////////////////////////////////////////
+// Perlin 1D
+const int FPerlin1D::kSampleCount = 256; // 2^n
+
+FPerlin1D::FPerlin1D()
+	: gradient(nullptr)
+{
+	gradient = new double[kSampleCount];
+	for (int i=0; i< kSampleCount; ++i)
+	{
+		gradient[i] = random_double(-1.0, 1.0);
+	}
+}
+
+FPerlin1D::~FPerlin1D()
+{
+	delete[] gradient;
+}
+
+double FPerlin1D::noise(double x) const
+{
+	int s0 = (int)x & (kSampleCount-1);
+	int s1 = (s0 + 1) & (kSampleCount-1);
+
+	double x0 = gradient[s0];
+	double x1 = gradient[s1];
+	double t = x - floor(x);
+
+	double value = slerp(x0, x1, fade(t));
+	return (value + 1.0) * 0.5; // [0, 1]
+}
+
+double FPerlin1D::fade(double t) const
+{
+	// Fade function as defined by Ken Perlin.  This eases coordinate values
+	// so that they will ease towards integral values.  This ends up smoothing
+	// the final output.
+	return t * t * t * (t * (t * 6 - 15) + 10);         // 6t^5 - 15t^4 + 10t^3
+}
+
+//////////////////////////////////////////////////////////////////////////
+/// Perlin 3D
 
 static int permutation[] =
 {   151,160,137,91,90,15,											// Hash lookup table as defined by Ken Perlin.  This is a randomly
@@ -38,7 +80,6 @@ FPerlin3D::~FPerlin3D()
 {
 	delete[] perm;
 }
-
 
 double FPerlin3D::fade(double t) const
 {
@@ -89,12 +130,8 @@ double FPerlin3D::grad(int hash, double x, double y, double z) const
 	return 0.0;
 }
 
-double FPerlin3D::noise(const FPoint3& p) const
+double FPerlin3D::noise(double x, double y, double z) const
 {
-	double x = p.x();
-	double y = p.y();
-	double z = p.z();
-
 	if (repeat > 0.0) {  // If we have any repeat on, change the coordinates to their "local" repetitions
 		x = fmod(x, repeat);
 		y = fmod(y, repeat);
@@ -124,26 +161,26 @@ double FPerlin3D::noise(const FPoint3& p) const
 
 	double x1, x2, y1, y2;
 	x1 = slerp(grad(aaa, xf, yf, zf),           // The gradient function calculates the dot product between a pseudorandom
-		grad(baa, xf - 1, yf, zf),             // gradient vector and the vector from the input coordinate to the 8
-		u);                                    // surrounding points in its unit cube.
+			   grad(baa, xf - 1, yf, zf),       // gradient vector and the vector from the input coordinate to the 8
+		       u);                              // surrounding points in its unit cube.
 	x2 = slerp(grad(aba, xf, yf - 1, zf),       // This is all then lerped together as a sort of weighted average based on the faded (u,v,w)
-		grad(bba, xf - 1, yf - 1, zf),         // values we made earlier.
-		u);
+		       grad(bba, xf - 1, yf - 1, zf),   // values we made earlier.
+		       u);
 	y1 = slerp(x1, x2, v);
 
 	x1 = slerp(grad(aab, xf, yf, zf - 1),
-		grad(bab, xf - 1, yf, zf - 1),
-		u);
+		       grad(bab, xf - 1, yf, zf - 1),
+		       u);
 	x2 = slerp(grad(abb, xf, yf - 1, zf - 1),
-		grad(bbb, xf - 1, yf - 1, zf - 1),
-		u);
+		       grad(bbb, xf - 1, yf - 1, zf - 1),
+		       u);
 	y2 = slerp(x1, x2, v);
 
-	auto result = (slerp(y1, y2, w) + 1.0) * 0.5;          // For convenience we bind the result to 0 - 1 (theoretical min/max before is [-1, 1])
+	auto result = (slerp(y1, y2, w) + 1.0) * 0.5; // For convenience we bind the result to 0 - 1 (theoretical min/max before is [-1, 1])
 	return result;
 }
 
-double FPerlin3D::octaveNoise(const FPoint3& p, int octaves, double persistence) const
+double FPerlin3D::octaveNoise(double x, double y, double z, int octaves, double persistence) const
 {
 	double total = 0;
 	double frequency = 1.0;
@@ -151,7 +188,7 @@ double FPerlin3D::octaveNoise(const FPoint3& p, int octaves, double persistence)
 	double maxValue = 0.0; // used for normalizing result to 0.0 - 1.0
 	for (int i = 0; i < octaves; ++i)
 	{
-		total += noise(frequency * p) * amplitude;
+		total += noise(frequency * x, frequency * y, frequency * z) * amplitude;
 		maxValue += amplitude;
 
 		amplitude *= persistence;
