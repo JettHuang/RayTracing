@@ -6,7 +6,7 @@
 #include "basic.h"
 #include "vec3.h"
 #include "perlin.h"
-#include "standard_perlin.h"
+#include "ClassicNoise.h"
 #include "SimplexNoise.h"
 
 
@@ -61,12 +61,12 @@ public:
 	virtual FColor3 value(double u, double v, const FPoint3& p) const override
 	{
 		//return FColor3(1, 1, 1) * 0.5 * (1 + sin(scale * p.z() + 10 * noise.turb(p)));
-		return FColor3(1, 1, 1) * ((simplex.fractal(7, p.x(), p.y(), p.z()) + 1.0) * 0.5);
+		return FColor3(1, 1, 1) * ((classic.fractal(1, p.x(), p.y(), p.z()) + 1.0) * 0.5);
 	}
 
 public:
 	FPerlin	noise;
-	FPerlin1D noise1d;
+	ClassicNoise classic;
 	SimplexNoise simplex;
 	double	scale;
 };
