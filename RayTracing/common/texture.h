@@ -61,7 +61,9 @@ public:
 	virtual FColor3 value(double u, double v, const FPoint3& p) const override
 	{
 		//return FColor3(1, 1, 1) * 0.5 * (1 + sin(scale * p.z() + 10 * noise.turb(p)));
-		return FColor3(1, 1, 1) * ((classic.fractal(1, p.x(), p.y(), p.z()) + 1.0) * 0.5);
+		//return FColor3(1, 1, 1) * ();
+		double value = (simplex.fractal(2, p.x(), p.y(), p.z()) + 1.0) * 0.5;
+		return FColor3(1,1,1) * 0.5 * (1 + sin(scale * p.z() + 10 * value));
 	}
 
 public:

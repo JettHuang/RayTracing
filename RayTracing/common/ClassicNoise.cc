@@ -23,18 +23,32 @@ static bool start = 1;
 
 static void init(void);
 
+static inline int fastfloor(float fp) {
+	int i = static_cast<int>(fp);
+	return (fp < i) ? (i - 1) : (i);
+}
+
 #define random()  rand()
 
 #define s_curve(t) ( t * t * (3.f - 2.f * t) )
 
 #define lerp(t, a, b) ( a + t * (b - a) )
 
+#if 1
 #define setup(i,b0,b1,r0,r1)\
-	t = vec[i] + N;\
+	t = vec[i] + N; /*convert to positive number*/ \
 	b0 = ((int)t) & BM;\
 	b1 = (b0+1) & BM;\
 	r0 = t - (int)t;\
 	r1 = r0 - 1.f;
+#else
+#define setup(i,b0,b1,r0,r1)\
+	t = vec[i]; \
+	b0 = ((int)t) & BM;\
+	b1 = (b0+1) & BM;\
+	r0 = t - fastfloor(t);\
+	r1 = r0 - 1.f;
+#endif
 
 static float noise1(float arg)
 {
