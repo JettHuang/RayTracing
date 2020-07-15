@@ -2,7 +2,7 @@
 /* (copyright Ken Perlin) */
 
 
-#include "ClassicNoise.h"
+#include "classic_noise.h"
 
 #include <stdlib.h>
 #include <stdio.h>

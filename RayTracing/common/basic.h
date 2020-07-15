@@ -58,4 +58,8 @@ T slerp(const T& a, const T& b, double t)
 	return (a + t * (b - a));
 }
 
+inline double fract(double x)
+{
+	return x - floor(x);
+}
 

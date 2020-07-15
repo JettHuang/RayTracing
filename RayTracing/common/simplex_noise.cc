@@ -24,8 +24,7 @@
  * or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "SimplexNoise.h"
-
+#include "simplex_noise.h"
 #include <cstdint>  // int32_t/uint8_t
 
 /**
