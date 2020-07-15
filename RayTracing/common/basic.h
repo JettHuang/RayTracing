@@ -52,8 +52,9 @@ inline int random_int(int min, int max)
 	return static_cast<int>(random_double((double)min, (double)(max + 1)));
 }
 
+// linear interpolation
 template<typename T>
-T slerp(const T& a, const T& b, double t)
+T lerp(const T& a, const T& b, double t)
 {
 	return (a + t * (b - a));
 }

@@ -51,7 +51,7 @@ bool FMovingSphere::hit(const FRay& ray, double t_min, double t_max, FHitRecord&
 FPoint3 FMovingSphere::Position(double time) const
 {
 	double t = (time - key0.time) / (key1.time - key0.time);
-	return slerp(key0.pos, key1.pos, t);
+	return lerp(key0.pos, key1.pos, t);
 }
 
 bool FMovingSphere::bounding_box(double t0, double t1, FAABB& outbox) const

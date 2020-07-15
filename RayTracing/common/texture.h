@@ -77,7 +77,7 @@ protected:
 			               abs(noiseval - 0.0625) + 
 			               abs(noiseval - 0.03125);
 		intensity = clamp(intensity, 0.0, 1.0);
-		FColor3 color = slerp(color1, color2, intensity);
+		FColor3 color = lerp(color1, color2, intensity);
 		return color;
 	}
 
@@ -92,7 +92,7 @@ protected:
 			               abs(noiseval - 0.0625) +
 			               abs(noiseval - 0.03125);
 		double sineval = sin(p.y() * 16.0 + intensity * 12.0) * 0.5 + 0.5;
-		FColor3 color = slerp(color1, color2, sineval);
+		FColor3 color = lerp(color1, color2, sineval);
 		return color;
 	}
 
@@ -118,7 +118,7 @@ protected:
 		double r = fract(dist + noiseVec[0] + noiseVec[1] + noiseVec[2]) * 2.0;
 		if (r > 1.0) { r = 2.0 - r; }
 
-		FVec3 color = slerp(LightWood, DarkWood, r);
+		FVec3 color = lerp(LightWood, DarkWood, r);
 		r = fract((p.x() + p.z()) * GrainScale + 0.5);
 		noiseVec[2] *= r;
 		if (r < GrainThreshold)
