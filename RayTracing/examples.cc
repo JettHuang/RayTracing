@@ -172,7 +172,7 @@ shared_ptr<FHittable> sample_simple_light(shared_ptr<FRayCamera>& OutCamera, FCo
 
 	shared_ptr<FHittableList> world = make_shared<FHittableList>();
 
-	auto noise_texture = make_shared<FNoiseTexture>(4);
+	auto noise_texture = make_shared<FNoiseTexture>();
 	shared_ptr<FMaterial> ground_material = make_shared<FLambertian>(noise_texture);
 
 	world->add(make_shared<FSphere>(FPoint3(0, -1000, 0), 1000, ground_material));
@@ -319,7 +319,7 @@ shared_ptr<FHittable> sample_cornell_final(shared_ptr<FRayCamera>& OutCamera, FC
 
 	shared_ptr<FHittableList> world = make_shared<FHittableList>();
 
-	auto pertext = make_shared<FNoiseTexture>(0.1);
+	auto pertext = make_shared<FNoiseTexture>();
 
 	auto mat = make_shared<FLambertian>(make_shared<FImageTexture>("earthmap.jpg"));
 
@@ -409,7 +409,7 @@ shared_ptr<FHittable> sample_final_scene(shared_ptr<FRayCamera>& OutCamera, FCol
 	auto emat = make_shared<FLambertian>(make_shared<FImageTexture>("earthmap.jpg"));
 	world->add(make_shared<FSphere>(FPoint3(400, 200, 400), 100, emat));
 
-	auto pertext = make_shared<FNoiseTexture>(0.1);
+	auto pertext = make_shared<FNoiseTexture>();
 	world->add(make_shared<FSphere>(FPoint3(220, 280, 300), 80, make_shared<FLambertian>(pertext)));
 
 	FHittableList boxes2;
