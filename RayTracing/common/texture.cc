@@ -27,8 +27,11 @@ FColor3 FNoiseTexture::value(double u, double v, const FPoint3& p) const
 	case NOISE_EFFECT_MARBLE:
 		return marble_effect(p);
 	case NOISE_EFFECT_WOOD:
-	default:
 		return wood_effect(p);
+	case NOISE_EFFECT_WORLEY:
+		return worley_effect(p);
+	default:
+		break;
 	}
 
 	return wood_effect(p);
@@ -106,6 +109,15 @@ FColor3 FNoiseTexture::wood_effect(const FPoint3& p) const
 	return color;
 }
 
+FColor3 FNoiseTexture::worley_effect(const FPoint3& p) const
+{
+	static const FColor3 color(1.0, 1.0, 1.0);
+
+	double val = worley.noise((float)p.x(), (float)p.y(), (float)p.z());
+	val = clamp(val, 0.0, 1.0);
+
+	return val * color;
+}
 
 // image texture
 FImageTexture::FImageTexture(const char* filename)

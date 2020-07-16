@@ -21,6 +21,7 @@ FExampleDesc examples[] = {
 	{ "random scen", sample_random_scene},
 	{ "two spheres", sample_two_spheres},
 	{ "perlin spheres", sample_two_perlin_spheres},
+	{ "worley spheres", sample_two_worley_spheres},
 	{ "earth", sample_earth },
 	{ "simple light", sample_simple_light},
 	{ "cornell box", sample_cornell_box },

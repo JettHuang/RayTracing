@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <limits>
 #include <memory>
+#include <algorithm>
 
 
 // Usings

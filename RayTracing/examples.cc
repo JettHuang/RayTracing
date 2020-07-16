@@ -126,11 +126,38 @@ shared_ptr<FHittable> sample_two_perlin_spheres(shared_ptr<FRayCamera>& OutCamer
 
 	shared_ptr<FHittableList> world = make_shared<FHittableList>();
 
-	auto noise_texture = make_shared<FNoiseTexture>();
+	auto noise_texture1 = make_shared<FNoiseTexture>(NOISE_EFFECT_WOOD);
+	shared_ptr<FMaterial> ground_material = make_shared<FLambertian>(noise_texture1);
+
+	auto noise_texture2 = make_shared<FNoiseTexture>(NOISE_EFFECT_MARBLE);
+	shared_ptr<FMaterial> ground_material2 = make_shared<FLambertian>(noise_texture2);
+
+	world->add(make_shared<FSphere>(FPoint3(0, -1000, 0), 1000, ground_material2));
+	world->add(make_shared<FSphere>(FPoint3(0, 2, 0), 2, ground_material));
+
+	return world;
+}
+
+shared_ptr<FHittable> sample_two_worley_spheres(shared_ptr<FRayCamera>& OutCamera, FColor3& background)
+{
+	const auto aspect_ratio = 1.0 / 1.0;
+	const FPoint3 lookfrom(13, 6, 40);
+	const FPoint3 lookat(0, 0, 0);
+	const FVec3 vup(0, 1, 0);
+	auto vfov = 20.0;
+	auto aperture = 0.0;
+	auto film_focus = 10.0;
+	OutCamera = make_shared<FPinholeCamera>(lookfrom, lookat, vup, vfov, aspect_ratio, film_focus, 0.0, 0.0);
+	background = FColor3(0.70, 0.80, 1.00);
+
+
+	shared_ptr<FHittableList> world = make_shared<FHittableList>();
+
+	auto noise_texture = make_shared<FNoiseTexture>(NOISE_EFFECT_WORLEY);
 	shared_ptr<FMaterial> ground_material = make_shared<FLambertian>(noise_texture);
 
 	world->add(make_shared<FSphere>(FPoint3(0, -1000, 0), 1000, ground_material));
-	world->add(make_shared<FSphere>(FPoint3(0, 2, 0), 2, ground_material));
+	world->add(make_shared<FSphere>(FPoint3(0, 4, 0), 4, ground_material));
 
 	return world;
 }

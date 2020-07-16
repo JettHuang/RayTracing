@@ -9,6 +9,7 @@
 #include "value_noise.h"
 #include "classic_noise.h"
 #include "simplex_noise.h"
+#include "worley_noise.h"
 
 
 // class texture
@@ -56,11 +57,12 @@ public:
 #define NOISE_EFFECT_SUNSURFACE  0
 #define NOISE_EFFECT_MARBLE		 1
 #define NOISE_EFFECT_WOOD		 2
+#define NOISE_EFFECT_WORLEY		 3
 
 class FNoiseTexture : public FTexture
 {
 public:
-	FNoiseTexture() : effectType(NOISE_EFFECT_MARBLE) {}
+	FNoiseTexture() : effectType(NOISE_EFFECT_WOOD) {}
 	FNoiseTexture(int effect) : effectType(effect) {}
 
 	virtual FColor3 value(double u, double v, const FPoint3& p) const override;
@@ -69,12 +71,14 @@ protected:
 	FColor3 sun_surface_effect(const FPoint3& p) const;
 	FColor3 marble_effect(const FPoint3& p) const;
 	FColor3 wood_effect(const FPoint3& p) const;
+	FColor3 worley_effect(const FPoint3 &p) const;
 
 protected:
 	int			 effectType;
 	ValueNoise   valueNoise;
 	ClassicNoise classic;
 	SimplexNoise simplex;
+	WorleyNoise  worley;
 };
 
 // image texture
