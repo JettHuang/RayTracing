@@ -20,6 +20,10 @@ public:
 	{
 		return FColor3(0,0,0);
 	}
+	virtual double pdf(const FVec3& wi) const
+	{
+		return 1.0;
+	}
 };
 
 
@@ -35,6 +39,11 @@ public:
 		scattered = FRay(rec.p, scatter_directin, ray_in.Time());
 		attenuation = albedo->value(rec.u, rec.v, rec.p);
 		return true;
+	}
+
+	virtual double pdf(const FVec3& wi) const
+	{
+		return 1.0 / kTwoPi; // pdf of hemisphere
 	}
 
 public:
