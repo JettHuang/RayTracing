@@ -161,8 +161,8 @@ int main(int argc, char* argv[])
 	}
 	else if (trace_method == 1)
 	{
-		const int samples_per_pixel = 1000;
-		const double P_RR = 0.6;
+		const int samples_per_pixel = 10000;
+		const double P_RR = 0.75;
 
 		for (int j = image_height - 1; j >= 0; --j)
 		{

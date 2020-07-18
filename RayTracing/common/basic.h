@@ -21,6 +21,7 @@ const double kInfinity = std::numeric_limits<double>::infinity();
 const double kPi = 3.1415926535897932385;
 const double kHalfPi = kPi * 0.5;
 const double kTwoPi = kPi * 2.0;
+const double kOneOverPi = 1.0 / kPi;
 const double kPiOver180 = kPi / 180.0;
 const double KINDA_SMALL_NUMBER = 0.0001;
 

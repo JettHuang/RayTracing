@@ -35,9 +35,12 @@ public:
 
 	virtual bool scatter(const FRay& ray_in, const FHitRecord& rec, FColor3& attenuation, FRay& scattered) const
 	{
-		FVec3 scatter_directin = rec.normal + random_unit_vector();
+		FVec3 scatter_directin = random_in_hemisphere(rec.normal);
+		FColor3 p = albedo->value(rec.u, rec.v, rec.p);
+		double cos_theta = dot(rec.normal, scatter_directin);
+
+		attenuation = (kOneOverPi * cos_theta) * p;
 		scattered = FRay(rec.p, scatter_directin, ray_in.Time());
-		attenuation = albedo->value(rec.u, rec.v, rec.p);
 		return true;
 	}
 
