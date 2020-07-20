@@ -171,6 +171,11 @@ public:
 		, roughnessTex(InRoughnessTex)
 	{}
 
+	virtual double pdf(const FVec3& wi) const
+	{
+		return 1.0 / kTwoPi; // pdf of hemisphere
+	}
+
 	virtual bool scatter(const FRay& ray_in, const FHitRecord& rec, FColor3& attenuation, FRay& scattered) const
 	{
 		FVec3 scatter_direction = unit_vector(random_in_hemisphere(rec.normal));
@@ -216,6 +221,8 @@ public:
 
 		const double NdotL = std::max(dot(N, L), 0.0);
 		attenuation = brdf_cooktorrance * NdotL;
+
+		return true;
 	}
 
 protected:

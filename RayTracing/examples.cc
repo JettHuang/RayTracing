@@ -456,4 +456,57 @@ shared_ptr<FHittable> sample_final_scene(shared_ptr<FRayCamera>& OutCamera, FCol
 	return world;
 }
 
+shared_ptr<FHittable> sample_pbr_sphere_scene(shared_ptr<FRayCamera>& OutCamera, FColor3& background)
+{
+	const auto aspect_ratio = 1.0 / 1.0;
+	const FPoint3 lookfrom(278, 278, -800);
+	const FPoint3 lookat(278, 278, 0);
+	const FVec3 vup(0, 1, 0);
+	auto vfov = 40.0;
+	auto aperture = 0.0;
+	auto film_focus = 10.0;
+	OutCamera = make_shared<FPinholeCamera>(lookfrom, lookat, vup, vfov, aspect_ratio, film_focus, 0.0, 0.0);
+	background = FColor3(0, 0, 0);
+
+
+	shared_ptr<FHittableList> world = make_shared<FHittableList>();
+
+	auto red = make_shared<FLambertian>(make_shared<FSolidColor>(.65, .05, .05));
+	auto white = make_shared<FLambertian>(make_shared<FSolidColor>(.73, .73, .73));
+	auto green = make_shared<FLambertian>(make_shared<FSolidColor>(.12, .45, .15));
+	auto light = make_shared<FDiffuseLight>(make_shared<FSolidColor>(5, 5, 5));
+
+	world->add(make_shared<FFlipFace>(make_shared<FYZRect>(0, 555, 0, 555, 555, green)));
+	world->add(make_shared<FYZRect>(0, 555, 0, 555, 0, red));
+	world->add(make_shared<FXZRect>(113, 443, 127, 432, 554, light));
+	world->add(make_shared<FFlipFace>(make_shared<FXZRect>(0, 555, 0, 555, 555, white)));
+	world->add(make_shared<FXZRect>(0, 555, 0, 555, 0, white));
+	world->add(make_shared<FFlipFace>(make_shared<FXYRect>(0, 555, 0, 555, 555, white)));
+
+	// plastic
+	{
+		auto albedo = make_shared<FImageTexture>("Resource/plastic/albedo.png");
+		auto metallic = make_shared<FImageTexture>("Resource/plastic/metallic.png");
+		auto roughness = make_shared<FImageTexture>("Resource/plastic/roughness.png");
+
+		auto pbrmaterial = make_shared<FPbrMaterial>(albedo, metallic, roughness);
+
+		world->add(make_shared<FSphere>(FPoint3(160, 100, 145), 100, pbrmaterial));
+
+	}
+
+	// iron
+	{
+		auto albedo = make_shared<FImageTexture>("Resource/rusted_iron/albedo.png");
+		auto metallic = make_shared<FImageTexture>("Resource/rusted_iron/metallic.png");
+		auto roughness = make_shared<FImageTexture>("Resource/rusted_iron/roughness.png");
+
+		auto pbrmaterial = make_shared<FPbrMaterial>(albedo, metallic, roughness);
+
+		world->add(make_shared<FSphere>(FPoint3(350, 150, 295), 100, pbrmaterial));
+	}
+
+	return world;
+}
+
 

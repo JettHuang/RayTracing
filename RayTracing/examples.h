@@ -23,3 +23,4 @@ shared_ptr<FHittable> sample_cornell_ball(shared_ptr<FRayCamera>& OutCamera, FCo
 shared_ptr<FHittable> sample_cornell_smoke(shared_ptr<FRayCamera>& OutCamera, FColor3& background);
 shared_ptr<FHittable> sample_cornell_final(shared_ptr<FRayCamera>& OutCamera, FColor3& background);
 shared_ptr<FHittable> sample_final_scene(shared_ptr<FRayCamera>& OutCamera, FColor3& background);
+shared_ptr<FHittable> sample_pbr_sphere_scene(shared_ptr<FRayCamera>& OutCamera, FColor3& background);

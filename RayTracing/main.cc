@@ -28,7 +28,8 @@ FExampleDesc examples[] = {
 	{ "cornell ball", sample_cornell_ball },
 	{ "cornell smoke", sample_cornell_smoke },
 	{ "cornell final", sample_cornell_final },
-	{ "final scene", sample_final_scene }
+	{ "final scene", sample_final_scene },
+	{ "pbr sphere scene", sample_pbr_sphere_scene }
 };
 
 static FColor3 kBlack(0, 0, 0);
@@ -117,7 +118,7 @@ int main(int argc, char* argv[])
 	{
 		example_index = atoi(argv[1]);
 		if (argc > 2) {
-			trace_method = 1;
+			trace_method = atoi(argv[2]);
 		}
 	}
 	if (example_index < 0 || example_index >= sizeof(examples) / sizeof(examples[0]))
