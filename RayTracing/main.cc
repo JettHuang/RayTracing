@@ -29,7 +29,8 @@ FExampleDesc examples[] = {
 	{ "cornell smoke", sample_cornell_smoke },
 	{ "cornell final", sample_cornell_final },
 	{ "final scene", sample_final_scene },
-	{ "pbr sphere scene", sample_pbr_sphere_scene }
+	{ "pbr sphere scene", sample_pbr_sphere_scene },
+	{ "pbr metallic scene", sample_pbr_metallic_scene}
 };
 
 static FColor3 kBlack(0, 0, 0);
@@ -137,7 +138,7 @@ int main(int argc, char* argv[])
 
 	if (trace_method == 0)
 	{
-		const int samples_per_pixel = 100;
+		const int samples_per_pixel = 1000;
 		const int max_depth = 50;
 
 		for (int j = image_height - 1; j >= 0; --j)

@@ -509,4 +509,44 @@ shared_ptr<FHittable> sample_pbr_sphere_scene(shared_ptr<FRayCamera>& OutCamera,
 	return world;
 }
 
+shared_ptr<FHittable> sample_pbr_metallic_scene(shared_ptr<FRayCamera>& OutCamera, FColor3& background)
+{
+	const auto aspect_ratio = 1.0 / 1.0;
+	const FPoint3 lookfrom(3, 1, 10);
+	const FPoint3 lookat(0, 0, 0);
+	const FVec3 vup(0, 1, 0);
+	auto vfov = 20.0;
+	auto aperture = 0.0;
+	auto film_focus = 10.0;
+	OutCamera = make_shared<FPinholeCamera>(lookfrom, lookat, vup, vfov, aspect_ratio, film_focus, 0.0, 0.0);
+	background = FColor3(0.70, 0.80, 1.00);
+
+	shared_ptr<FHittableList> world = make_shared<FHittableList>();
+
+	auto checker = make_shared<FCheckerTexture>(
+		make_shared<FSolidColor>(FColor3(0.2, 0.3, 0.1)),
+		make_shared<FSolidColor>(FColor3(0.9, 0.9, 0.9)));
+	shared_ptr<FMaterial> ground_material = make_shared<FLambertian>(checker);
+	world->add(make_shared<FSphere>(FPoint3(0, -1000, 0), 1000, ground_material));
+
+	const int count = 5;
+	for (int a = 0; a < count; a++) 
+	{
+		FVec3 center(0, 0.2, -0.6 * a + 3.0);
+
+		double metal = (double)a / (double)count;
+		double rough = 0.25; // (double)a / (double)count;
+
+		auto albedo = make_shared<FSolidColor>(FColor3(1.0, 0.78, 0.34));
+		auto metallic = make_shared<FSolidColor>(FColor3(metal, metal, metal));
+		auto roughness = make_shared<FSolidColor>(FColor3(rough, rough, rough));
+
+		auto pbrmaterial = make_shared<FPbrMaterial>(albedo, metallic, roughness);
+		world->add(make_shared<FSphere>(center, 0.2, pbrmaterial));
+	}
+
+	// use bvh
+	shared_ptr<FBVH_Node> bvh = make_shared<FBVH_Node>(*world, 0.0, 1.0);
+	return bvh;
+}
 
